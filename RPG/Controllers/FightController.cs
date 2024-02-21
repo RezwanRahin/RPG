@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using RPG.Services.FightService;
 
 namespace RPG.Controllers
 {
@@ -7,5 +7,11 @@ namespace RPG.Controllers
 	[ApiController]
 	public class FightController : ControllerBase
 	{
+		private readonly IFightService _fightService;
+
+		public FightController(IFightService fightService)
+		{
+			_fightService = fightService;
+		}
 	}
 }
