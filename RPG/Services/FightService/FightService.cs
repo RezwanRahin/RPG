@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using RPG.Data;
 using RPG.Dtos.Fight;
 using RPG.Models;
@@ -8,10 +9,12 @@ namespace RPG.Services.FightService
 	public class FightService : IFightService
 	{
 		private readonly DataContext _context;
+		private readonly IMapper _mapper;
 
-		public FightService(DataContext context)
+		public FightService(DataContext context, IMapper mapper)
 		{
 			_context = context;
+			_mapper = mapper;
 		}
 
 		public async Task<ServiceResponse<FightResultDto>> Fight(FightRequestDto request)
