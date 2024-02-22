@@ -37,11 +37,7 @@ namespace RPG.Services.FightService
 					return response;
 				}
 
-				int damage = skill.Damage + new Random().Next(attacker.Intelligence);
-				damage -= new Random().Next(opponent.Defense);
-
-				if (damage > 0)
-					opponent.HitPoints -= damage;
+				int damage = DoSkillAttack(attacker, opponent, skill);
 
 				if (opponent.HitPoints <= 0)
 					response.Message = $"{opponent.Name} has been defeated!";
@@ -65,6 +61,17 @@ namespace RPG.Services.FightService
 			}
 
 			return response;
+		}
+
+		private static int DoSkillAttack(Character attacker, Character opponent, Skill skill)
+		{
+			int damage = skill.Damage + new Random().Next(attacker.Intelligence);
+			damage -= new Random().Next(opponent.Defense);
+
+			if (damage > 0)
+				opponent.HitPoints -= damage;
+
+			return damage;
 		}
 
 		public async Task<ServiceResponse<AttackResultDto>> WeaponAttack(WeaponAttackDto request)
