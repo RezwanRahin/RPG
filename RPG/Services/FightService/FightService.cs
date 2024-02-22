@@ -82,12 +82,7 @@ namespace RPG.Services.FightService
 				if (attacker is null || opponent is null || attacker.Weapon is null)
 					throw new Exception("Something fishy is going on here...");
 
-
-				int damage = attacker.Weapon.Damage + new Random().Next(attacker.Strength);
-				damage -= new Random().Next(opponent.Defense);
-
-				if (damage > 0)
-					opponent.HitPoints -= damage;
+				int damage = DoWeaponAttack(attacker, opponent);
 
 				if (opponent.HitPoints <= 0)
 					response.Message = $"{opponent.Name} has been defeated!";
@@ -111,6 +106,20 @@ namespace RPG.Services.FightService
 			}
 
 			return response;
+		}
+
+		private static int DoWeaponAttack(Character attacker, Character opponent)
+		{
+			if (attacker.Weapon is null)
+				throw new Exception("Attacker has no weapon!");
+
+			int damage = attacker.Weapon.Damage + new Random().Next(attacker.Strength);
+			damage -= new Random().Next(opponent.Defense);
+
+			if (damage > 0)
+				opponent.HitPoints -= damage;
+
+			return damage;
 		}
 	}
 }
